@@ -3,7 +3,11 @@
 class AnalizeText
 {
 
-    protected function normalizeValues($input)
+    /**
+     * @param $input
+     * @return float
+     */
+    protected function normalizeValues($input): float
     {
       $output = preg_replace('/\w{1,}:/', '', $input);
       return (float) $output;
@@ -25,48 +29,45 @@ class AnalizeText
 
         // Get silence values <
         // Get start values
-        preg_match_all('/start:\d{1,}\D\d{1,}/', $silence_text_user, $output_user_silence_start);
+        preg_match_all('/start:\d{1,}\D{0,1}\d{1,}/', $silence_text_user, $output_user_silence_start);
         $output_user_silence_start = array_pop($output_user_silence_start);
 
-        preg_match_all('/start:\d{1,}\D\d{1,}/', $silence_text_customer, $output_customer_silence_start);
+        preg_match_all('/start:\d{1,}\D{0,1}\d{1,}/', $silence_text_customer, $output_customer_silence_start);
         $output_customer_silence_start = array_pop($output_customer_silence_start);
 
         // Get end values <
-        preg_match_all('/end:\d{1,}\D\d{1,}/', $silence_text_user, $output_user_silence_end);
+        preg_match_all('/end:\d{1,}\D{0,1}\d{1,}/', $silence_text_user, $output_user_silence_end);
         $output_user_silence_end = array_pop($output_user_silence_end);
 
-        preg_match_all('/end:\d{1,}\D\d{1,}/', $silence_text_customer, $output_customer_silence_end);
+        preg_match_all('/end:\d{1,}\D{0,1}\d{1,}/', $silence_text_customer, $output_customer_silence_end);
         $output_customer_silence_end = array_pop($output_customer_silence_end);
 
         // Get duration values <
-        preg_match_all('/duration:\d{1,}\D\d{1,}/', $silence_text_user, $output_user_silence_duration);
+        preg_match_all('/duration:\d{1,}\D{0,1}\d{1,}/', $silence_text_user, $output_user_silence_duration);
         $output_user_silence_duration = array_pop($output_user_silence_duration);
 
-        preg_match_all('/duration:\d{1,}\D\d{1,}/', $silence_text_customer, $output_customer_silence_duration);
+        preg_match_all('/duration:\d{1,}\D{0,1}\d{1,}/', $silence_text_customer, $output_customer_silence_duration);
         $output_customer_silence_duration = array_pop($output_customer_silence_duration);
 
 
         // Combined array user <
-        //$combined_values_user = array();
         $num_items = count($output_user_silence_start);
         for ($i = 0; $i < $num_items; ++$i) {
-            $combined_values_user[] = array(
+            $combined_values_user[] = [
                 'start' => $this->normalizeValues($output_user_silence_start[$i]),
                 'end' => $this->normalizeValues($output_user_silence_end[$i]),
                 'duration' => $this->normalizeValues($output_user_silence_duration[$i])
-            );
+            ];
         }
 
-        
         // Combined array customer <
-       // $combined_arr_customer = array();
         $num_items = count($output_customer_silence_start);
         for ($i = 0; $i < $num_items; ++$i) {
-            $combined_arr_customer[] = array(
+            $combined_arr_customer[] = [
                 'start' => $this->normalizeValues($output_customer_silence_start[$i]),
                 'end' => $this->normalizeValues($output_customer_silence_end[$i]),
                 'duration' => $this->normalizeValues($output_customer_silence_duration[$i])
-            );
+            ];
         }
 
 
