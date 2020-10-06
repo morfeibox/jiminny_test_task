@@ -21,7 +21,7 @@ class AnalizeText
 
         // remove whitespace form text from text <
         $silence_text_user = preg_replace('/\s/', '', $document['user_channel']);
-        $silence_text_customer = preg_replace('/\s/', '', $document['user_channel']);
+        $silence_text_customer = preg_replace('/\s/', '', $document['customer_channel']);
 
         // Get silence values <
         // Get start values
@@ -57,7 +57,7 @@ class AnalizeText
             );
         }
 
-        var_dump($combined_values_user);
+        
         // Combined array customer <
        // $combined_arr_customer = array();
         $num_items = count($output_customer_silence_start);
