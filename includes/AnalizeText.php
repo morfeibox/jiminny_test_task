@@ -1,13 +1,12 @@
-<?php
+<?php declare(strict_types=1);
 
 class AnalizeText
 {
-
     /**
      * @param $input
      * @return float
      */
-    protected function normalizeValues($input): float
+    private function normalizeValues($input): float
     {
         $output = preg_replace('/\w{1,}:/', '', $input);
         return (float) $output;
@@ -17,9 +16,8 @@ class AnalizeText
      * @param array $input
      * @return array
      */
-    protected function invertToActiveSpeech(array $input): array
+    private function invertToActiveSpeech(array $input): array
     {
-
         $num_items = count($input);
         for ($i = 0; $i < $num_items; ++$i) {
             if ($i == 0) {
@@ -55,7 +53,7 @@ class AnalizeText
      * @param array $input
      * @return float
      */
-    protected function longestMonologue(array $input):float
+    private function getLongestMonologue(array $input): float
     {
         return max(array_map(function ($v) {
             if (!is_null($v[1]) && !is_null($v[0])) {
@@ -80,7 +78,6 @@ class AnalizeText
             $combined_values_user[$i_user - 1]['end'] : $combined_values_customer[$i_customer - 1]['end'];
 
         return $call_duration;
-
     }
 
     /**
@@ -158,8 +155,8 @@ class AnalizeText
         $customer_active['active_speech'] = $this->invertToActiveSpeech($combined_values_customer);
 
         // Get Longest Monologues <
-        $user_active['longest_monologue'] = $this->longestMonologue($user_active['active_speech']);
-        $customer_active['longest_monologue'] = $this->longestMonologue($customer_active['active_speech']);
+        $user_active['longest_monologue'] = $this->getLongestMonologue($user_active['active_speech']);
+        $customer_active['longest_monologue'] = $this->getLongestMonologue($customer_active['active_speech']);
 
         // Get User Talk Percentage <
         $user_talk_percentage = round(($user_active['longest_monologue'] / $this->getCallDuration($combined_values_user, $combined_values_customer) * 100), 2);
