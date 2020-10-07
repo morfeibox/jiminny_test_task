@@ -1,17 +1,6 @@
 <?php
-
-
-class API
-{
-
-    function select()
-    {
-
-       // return json_encode($data);
-    }
-
-}
-
+include './api/Api.php';
 $api = new API();
 header('Content-Type: application/json');
-//echo $api->select();
+echo $api->select();
+?>
