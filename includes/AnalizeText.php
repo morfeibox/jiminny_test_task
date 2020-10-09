@@ -119,16 +119,16 @@ class AnalizeText
             throw new Exception('Document customer_channel is not set!');
         }
 
-        // remove whitespace form text from text <
+        // remove whitespace form text <
         $silence_text_user = preg_replace('/\s/', '', $req['user_channel']);
         $silence_text_customer = preg_replace('/\s/', '', $req['customer_channel']);
 
         // Get silence values <
-        // Get start values
         $needle_start = '/start:\d{1,}\D{0,1}\d{1,}/';
         $needle_end = '/end:\d{1,}\D{0,1}\d{1,}/';
         $needle_duration = '/duration:\d{1,}\D{0,1}\d{1,}/';
 
+        // Get start values
         preg_match_all($needle_start, $silence_text_user, $user_silence_start);
         $user_silence_start = array_pop($user_silence_start);
         preg_match_all($needle_start, $silence_text_customer, $customer_silence_start);
